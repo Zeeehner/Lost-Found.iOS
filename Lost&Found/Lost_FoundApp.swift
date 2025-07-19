@@ -10,6 +10,9 @@ import SwiftData
 
 @main
 struct Lost_FoundApp: App {
+    
+    @StateObject private var authViewModel = AuthViewModel()
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -25,7 +28,8 @@ struct Lost_FoundApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView()
+                .environmentObject(AuthViewModel())
         }
         .modelContainer(sharedModelContainer)
     }
