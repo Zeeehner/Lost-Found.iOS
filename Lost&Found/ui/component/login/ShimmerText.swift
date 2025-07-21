@@ -25,8 +25,8 @@ struct ShimmerText: View {
             startPoint: .top,
             endPoint: .bottom
         )
-
-        ZStack {
+    
+        GeometryReader { geometry in
             ZStack {
                 LinearGradient(
                     colors: baseColors,
@@ -41,12 +41,14 @@ struct ShimmerText: View {
                     .offset(x: shimmerOffset)
                     .blendMode(.screen)
             }
+            .frame(width: geometry.size.width)
             .mask(
                 Text(text)
                     .font(font)
-                    .kerning(1.2)
+                    .frame(width: geometry.size.width, alignment: .center)
             )
         }
+        .frame(height: 40)
         .onAppear {
             withAnimation(.linear(duration: 5.0).repeatForever(autoreverses: false)) {
                 shimmerOffset = 500
@@ -54,4 +56,3 @@ struct ShimmerText: View {
         }
     }
 }
-

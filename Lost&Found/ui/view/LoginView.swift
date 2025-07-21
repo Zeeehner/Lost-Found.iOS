@@ -27,15 +27,17 @@ struct LoginView: View {
                         VStack(spacing: 20) {
                             BreathingLogo(isBreathing: $isBreathing, showLogo: $showLogo)
                             ShimmerText(
-                                      text: "Lost & Found",
-                                      font: .system(size: 32, weight: .heavy, design: .rounded),
-                                      baseColors: [.green, .teal],
-                                      shimmerColor: .white.opacity(0.7)
-                                  )
+                                text: "Lost & Found",
+                                font: .system(size: 32, weight: .heavy, design: .rounded),
+                                baseColors: [.green, .teal],
+                                shimmerColor: .white.opacity(0.7)
+                            )
+                            .frame(maxWidth: .infinity, alignment: .center)
                             .opacity(showLogo ? 1 : 0)
-                                .offset(y: showLogo ? 0 : 40)
-                                .animation(.spring(response: 1.2, dampingFraction: 0.7).delay(0.2), value: showLogo)
-                                .padding(.horizontal, 20)
+                            .offset(y: showLogo ? 0 : 40)
+                            .animation(.spring(response: 1.2, dampingFraction: 0.7).delay(0.2), value: showLogo)
+                            .padding(.horizontal, 20)
+                            
                             
                         }
                         .padding(.top, geometry.safeAreaInsets.top + 20)
