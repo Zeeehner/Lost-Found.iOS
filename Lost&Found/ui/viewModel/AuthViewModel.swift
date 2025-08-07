@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Supabase
 
 @MainActor
 class AuthViewModel: ObservableObject {
