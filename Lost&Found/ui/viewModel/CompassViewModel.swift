@@ -5,6 +5,9 @@
 //  Created by Noah on 21.07.25.
 //
 
+import Foundation
+import CoreLocation
+
 class CompassViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     
