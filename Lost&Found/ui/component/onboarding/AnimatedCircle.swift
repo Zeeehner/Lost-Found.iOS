@@ -40,7 +40,3 @@ struct AnimatedCircle: View {
         }
     }
 }
-
-#Preview {
-    AnimatedCircle(animateConstruction: .constant(true))
-}

@@ -21,13 +21,8 @@ struct InfoSection: View {
                 .offset(y: showWelcome ? 0 : 20)
                 .animation(.spring(response: 1.0, dampingFraction: 0.8).delay(0.8), value: showWelcome)
             
-            
             Text("The App is still in development.")
             Text("Soon you will be able to explore all the features!")
         }
     }
-}
-
-#Preview {
-    InfoSection(showWelcome: .constant(true))
 }

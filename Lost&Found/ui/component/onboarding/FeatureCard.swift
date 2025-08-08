@@ -48,7 +48,3 @@ struct FeatureCard: View {
         }
     }
 }
-
-#Preview {
-    FeatureCard(icon: "sunglasses.fill", title: "Boom Beach", color: Color.cyan)
-}

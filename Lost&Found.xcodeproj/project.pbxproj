@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		785998A82E45579B00BD5740 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 785998A72E45579B00BD5740 /* Auth */; };
-		785998AA2E4557F700BD5740 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 785998A92E4557F700BD5740 /* Functions */; };
-		785998AC2E4557F700BD5740 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 785998AB2E4557F700BD5740 /* PostgREST */; };
-		785998AE2E4557F700BD5740 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 785998AD2E4557F700BD5740 /* Realtime */; };
-		785998B02E4557F700BD5740 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 785998AF2E4557F700BD5740 /* Storage */; };
+		785999FC2E4568D600BD5740 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 785999FB2E4568D600BD5740 /* Auth */; };
+		785999FE2E4568D600BD5740 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 785999FD2E4568D600BD5740 /* Functions */; };
+		78599A002E4568D600BD5740 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 785999FF2E4568D600BD5740 /* PostgREST */; };
+		78599A022E4568D600BD5740 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 78599A012E4568D600BD5740 /* Realtime */; };
+		78599A042E4568D600BD5740 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 78599A032E4568D600BD5740 /* Storage */; };
+		785F70892E45B2DF00F145BC /* secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 785F70882E45B2DF00F145BC /* secret.xcconfig */; };
+		787555DC2E456FC6006A61B3 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 787555DB2E456FC6006A61B3 /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		782605582E2B9F5100333A95 /* Lost&Found.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lost&Found.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		785F70882E45B2DF00F145BC /* secret.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secret.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -31,11 +34,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				785998AC2E4557F700BD5740 /* PostgREST in Frameworks */,
-				785998AA2E4557F700BD5740 /* Functions in Frameworks */,
-				785998A82E45579B00BD5740 /* Auth in Frameworks */,
-				785998B02E4557F700BD5740 /* Storage in Frameworks */,
-				785998AE2E4557F700BD5740 /* Realtime in Frameworks */,
+				78599A002E4568D600BD5740 /* PostgREST in Frameworks */,
+				785999FE2E4568D600BD5740 /* Functions in Frameworks */,
+				787555DC2E456FC6006A61B3 /* Supabase in Frameworks */,
+				785999FC2E4568D600BD5740 /* Auth in Frameworks */,
+				78599A042E4568D600BD5740 /* Storage in Frameworks */,
+				78599A022E4568D600BD5740 /* Realtime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,7 +49,9 @@
 		7826054F2E2B9F5100333A95 = {
 			isa = PBXGroup;
 			children = (
+				785F70882E45B2DF00F145BC /* secret.xcconfig */,
 				7826055A2E2B9F5100333A95 /* Lost&Found */,
+				787555DA2E456FC6006A61B3 /* Frameworks */,
 				782605592E2B9F5100333A95 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +62,13 @@
 				782605582E2B9F5100333A95 /* Lost&Found.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		787555DA2E456FC6006A61B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -78,11 +91,12 @@
 			);
 			name = "Lost&Found";
 			packageProductDependencies = (
-				785998A72E45579B00BD5740 /* Auth */,
-				785998A92E4557F700BD5740 /* Functions */,
-				785998AB2E4557F700BD5740 /* PostgREST */,
-				785998AD2E4557F700BD5740 /* Realtime */,
-				785998AF2E4557F700BD5740 /* Storage */,
+				785999FB2E4568D600BD5740 /* Auth */,
+				785999FD2E4568D600BD5740 /* Functions */,
+				785999FF2E4568D600BD5740 /* PostgREST */,
+				78599A012E4568D600BD5740 /* Realtime */,
+				78599A032E4568D600BD5740 /* Storage */,
+				787555DB2E456FC6006A61B3 /* Supabase */,
 			);
 			productName = "Lost&Found";
 			productReference = 782605582E2B9F5100333A95 /* Lost&Found.app */;
@@ -113,7 +127,7 @@
 			mainGroup = 7826054F2E2B9F5100333A95;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				785998A62E45579B00BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				785999FA2E4568D600BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 782605592E2B9F5100333A95 /* Products */;
@@ -130,6 +144,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				785F70892E45B2DF00F145BC /* secret.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +163,7 @@
 /* Begin XCBuildConfiguration section */
 		782605632E2B9F5300333A95 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 785F70882E45B2DF00F145BC /* secret.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -212,6 +228,7 @@
 		};
 		782605642E2B9F5300333A95 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 785F70882E45B2DF00F145BC /* secret.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -269,6 +286,7 @@
 		};
 		782605662E2B9F5300333A95 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 785F70882E45B2DF00F145BC /* secret.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -281,12 +299,13 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				ORDER_FILE = secret.xcconfig;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mys4d.Lost-Found";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -301,6 +320,7 @@
 		};
 		782605672E2B9F5300333A95 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 785F70882E45B2DF00F145BC /* secret.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -313,12 +333,13 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				ORDER_FILE = secret.xcconfig;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mys4d.Lost-Found";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -355,7 +376,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		785998A62E45579B00BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+		785999FA2E4568D600BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/supabase-community/supabase-swift.git";
 			requirement = {
@@ -366,30 +387,35 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		785998A72E45579B00BD5740 /* Auth */ = {
+		785999FB2E4568D600BD5740 /* Auth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 785998A62E45579B00BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = 785999FA2E4568D600BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Auth;
 		};
-		785998A92E4557F700BD5740 /* Functions */ = {
+		785999FD2E4568D600BD5740 /* Functions */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 785998A62E45579B00BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = 785999FA2E4568D600BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Functions;
 		};
-		785998AB2E4557F700BD5740 /* PostgREST */ = {
+		785999FF2E4568D600BD5740 /* PostgREST */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 785998A62E45579B00BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = 785999FA2E4568D600BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = PostgREST;
 		};
-		785998AD2E4557F700BD5740 /* Realtime */ = {
+		78599A012E4568D600BD5740 /* Realtime */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 785998A62E45579B00BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = 785999FA2E4568D600BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Realtime;
 		};
-		785998AF2E4557F700BD5740 /* Storage */ = {
+		78599A032E4568D600BD5740 /* Storage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 785998A62E45579B00BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = 785999FA2E4568D600BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Storage;
+		};
+		787555DB2E456FC6006A61B3 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 785999FA2E4568D600BD5740 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

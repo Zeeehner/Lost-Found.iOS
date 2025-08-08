@@ -13,6 +13,7 @@ struct GridCells: View {
     
     var body: some View {
         VStack(spacing: 15) {
+            
             Text("Upcoming features:")
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundStyle(.primary)
@@ -28,8 +29,4 @@ struct GridCells: View {
             }
         }
     }
-}
-
-#Preview {
-    GridCells(showWelcome: .constant(true))
 }

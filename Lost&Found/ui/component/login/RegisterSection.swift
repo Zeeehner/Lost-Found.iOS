@@ -26,16 +26,6 @@ struct RegisterSection: View {
             .animation(.spring(response: 0.8, dampingFraction: 0.7).delay(0.1), value: animateFields)
             
             CustomTextField(
-                text: $authViewModel.username,
-                contentDescription: "Username",
-                icon: "person.fill",
-                isSecure: false
-            )
-            .opacity(animateFields ? 1 : 0)
-            .offset(x: animateFields ? 0 : -50)
-            .animation(.spring(response: 0.8, dampingFraction: 0.7).delay(0.2), value: animateFields)
-            
-            CustomTextField(
                 text: $authViewModel.password,
                 contentDescription: "Password",
                 icon: "lock.fill",
@@ -57,10 +47,4 @@ struct RegisterSection: View {
             
         }
     }
-}
-
-
-#Preview {
-    RegisterSection(animateFields: .constant(true))
-        .environmentObject(AuthViewModel())
 }

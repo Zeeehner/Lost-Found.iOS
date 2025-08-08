@@ -35,8 +35,3 @@ struct SignUpChoice: View {
         }
     }
 }
-
-#Preview {
-    SignUpChoice(animateFields: .constant(true))
-        .environmentObject(AuthViewModel())
-}

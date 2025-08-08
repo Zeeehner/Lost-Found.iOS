@@ -26,7 +26,3 @@ struct Branding: View {
             .animation(.spring(response: 1.0, dampingFraction: 0.8, blendDuration: 0).delay(0.3), value: showLogo)
     }
 }
-
-#Preview {
-    Branding(showLogo: .constant(true))
-}

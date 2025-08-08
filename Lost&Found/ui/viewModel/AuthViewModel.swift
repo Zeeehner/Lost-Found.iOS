@@ -5,149 +5,251 @@
 //  Created by Noah on 19.07.25.
 //
 
+import Supabase
 import Foundation
+import SwiftUI
+import Combine
 
 @MainActor
 class AuthViewModel: ObservableObject {
     
-    var myUser: [User?] = []
+    // MARK: - Singleton
+    static let shared = AuthViewModel()
     
-    // Properties
-    @Published var user: User?
-    @Published var isLoggingIn = false
-    @Published var isRegistering = false
-    @Published var isBreathing = false
+    // MARK: - Dependencies
+    private let authManager = AuthManager.shared
+    
+    // MARK: - Published Properties
     @Published var email: String = ""
-    @Published var username: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
     @Published var errorMessage: String = ""
-    @Published var isBlank: Bool = false
-    @Published var goBackToLogin: Bool = false
+    @Published var successMessage: String = ""
+    @Published var isLoading: Bool = false
+    @Published var showingAlert: Bool = false
+    @Published var isRegistering: Bool = false
+    @Published var isUserLoggedIn: Bool = false
+    @Published private(set) var canLogin: Bool = false
     
-    let emailRegEx = "^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,49}$"
+    private var cancellables = Set<AnyCancellable>()
     
-    // Computed property that returns the current user's ID
-    var currentUserID: String? {
-        return user?.id.uuidString
+    // MARK: - Initialization
+    init() {
+        // Login button enabled, wenn Email + Passwort nicht leer sind
+        Publishers.CombineLatest($email, $password)
+            .map { !$0.0.trimmingCharacters(in: .whitespaces).isEmpty && !$0.1.isEmpty }
+            .assign(to: \.canLogin, on: self)
+            .store(in: &cancellables)
     }
     
-    // Computed property that checks if the user is logged in
-    var isLoggedIn: Bool {
-        return user != nil
-    }
-    
-    // Computed property to check if the entered email is valid using the regex pattern
+    // MARK: - Computed Properties
     var isValidEmail: Bool {
-        if email.isEmpty {
+        email.isEmpty || isValidEmailFormat(email)
+    }
+    
+    var canRegister: Bool {
+        !email.isEmpty &&
+        !password.isEmpty &&
+        !confirmPassword.isEmpty &&
+        isValidEmail &&
+        password == confirmPassword &&
+        password.count >= 8 &&
+        !isLoading
+    }
+    
+    // MARK: - Auth Actions
+    func checkLoginStatus() {
+        Task {
+            do {
+                let loggedIn = try await authManager.isLoggedIn()
+                await MainActor.run {
+                    self.isUserLoggedIn = loggedIn
+                }} catch {
+                    await MainActor.run {
+                        self.isUserLoggedIn = false
+                    }
+                }
+        }
+    }
+    
+    func register() async -> Bool {
+        guard canRegister else {
+            showError("Bitte alle Felder korrekt ausfüllen")
+            return false
+        }
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            try await authManager.signUp(email: email.trimmingCharacters(in: .whitespacesAndNewlines), password: password)
+            await MainActor.run {
+                self.successMessage = "Registrierung erfolgreich! Bitte überprüfe deine E-Mails."
+            }
             return true
-        } else if !email.isEmpty && email.isValid(regexes: [emailRegEx]) {
-            return true
-        } else {
+        } catch {
+            await MainActor.run {
+                self.showError(error.localizedDescription)
+            }
             return false
         }
     }
     
-    // Computed property to check if the input data for registration is valid
-    var isRegisterInputValid: Bool {
-        if isRegistering {
-            return !email.isEmpty && !username.isEmpty && !password.isEmpty && password == confirmPassword && password.count >= 6
-        } else {
-            return !username.isEmpty && !password.isEmpty
+    func login() async -> Bool {
+        guard canLogin else {
+            showError("Bitte E-Mail und Passwort eingeben")
+            return false
         }
-    }
-    
-    var noInput: Bool {
-        if goBackToLogin {
-            isRegistering = false
-            return email.isEmpty && username.isEmpty && password.isEmpty
-        } else {
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            try await authManager.signIn(email: email.trimmingCharacters(in: .whitespacesAndNewlines), password: password)
+            await MainActor.run {
+                self.successMessage = "Erfolgreich eingeloggt"
+                self.checkLoginStatus()
+            }
+            return true
+        } catch {
+            await MainActor.run {
+                self.showError(error.localizedDescription)
+            }
             return false
         }
     }
     
+    func sendMagicLink() async {
+        guard !email.isEmpty, isValidEmailFormat(email) else {
+            showError("Bitte gültige E-Mail-Adresse eingeben")
+            return
+        }
+        
+        await performAuthAction {
+            try await self.authManager.sendMagicLink(email: self.email)
+            self.successMessage = "Magic Link wurde an \(self.email) gesendet!"
+        }
+    }
     
-    // Function to register a new user with email and password
-    func registerEmailPassword(email: String, userName: String, password: String, confirmPassword: String) {
-        // Fixed the logic bug in original code
-        guard !email.isEmpty, !userName.isEmpty, !password.isEmpty, password == confirmPassword, password.count >= 6 else {
-            errorMessage = "Please fill all fields correctly. Password must be at least 6 characters."
+    func resetPassword() async {
+        guard !email.isEmpty, isValidEmailFormat(email) else {
+            showError("Bitte gültige E-Mail-Adresse eingeben")
             return
         }
         
-        // Check email validity
-        guard email.isValid(regexes: [emailRegEx]) else {
-            errorMessage = "Please enter a valid email address."
-            return
+        await performAuthAction {
+            try await self.authManager.resetPassword(email: self.email)
+            self.successMessage = "Password-Reset Link wurde an \(self.email) gesendet!"
         }
-        
-        // Simulate successful registration
-        print("Registration successful!")
-        
-        user = User(id: UUID(), username: userName, email: email, password: password)
-        clearInputs()
+    }
+    
+    func logout() async {
+        await performAuthAction {
+            try await self.authManager.signOut()
+            self.successMessage = "Erfolgreich abgemeldet"
+            self.clearInputs()
+            self.checkLoginStatus()
+            
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .userDidLogout, object: nil)
+            }
+        }
+    }
+    
+    func refreshSession() async {
+        await performAuthAction {
+            try await self.authManager.refreshSession()
+        }
+    }
+    
+    // MARK: - Helpers
+    private func performAuthAction(_ action: @escaping () async throws -> Void) async {
+        isLoading = true
         errorMessage = ""
+        successMessage = ""
+        
+        defer { isLoading = false }
+        
+        do {
+            try await action()
+        } catch {
+            showError(error.localizedDescription)
+        }
     }
     
-    // Function to login existing user
-    func loginUserNamePassword(userName: String, password: String) {
-        guard !userName.isEmpty, !password.isEmpty else {
-            errorMessage = "Please enter both username and password."
-            return
+    // MARK: - Helper Properties
+    var buttonGradientColors: (Color, Color) {
+        if isRegistering {
+            // Für Registrierung: Grün-Blau wenn valide, Grau wenn nicht
+            return canRegister ? (.green, .blue) : (.gray, .gray.opacity(0.8))
+        } else {
+            // Für Login: Blau-Lila wenn valide, Grau wenn nicht
+            return canLogin ? (.blue, .purple) : (.gray, .gray.opacity(0.8))
+        }
+    }
+    
+    var isButtonEnabled: Bool {
+        if isLoading {
+            return false
         }
         
-        // Demo login - always successful for demo purposes
-        // In real app, verify against stored users or API
-        if userName.lowercased() == "demo" && password == "123456" {
-            user = User(id: UUID(), username: userName, email: "demo@example.com", password: password)
-            clearInputs()
-            errorMessage = ""
+        if isRegistering {
+            // Bei Registrierung: Immer enabled (für Zurück-Button oder Register)
+            return true
         } else {
-            // For demo, create user anyway
-            user = User(id: UUID(), username: userName, email: "", password: password)
-            clearInputs()
-            errorMessage = ""
+            // Bei Login: Nur wenn Login möglich
+            return canLogin
         }
     }
     
-    func logout() {
-        user = nil
-        clearInputs()
+    private func showError(_ message: String) {
+        errorMessage = message
+        showingAlert = true
+    }
+    
+    private func isValidEmailFormat(_ email: String) -> Bool {
+        let emailRegEx = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
+        return emailPredicate.evaluate(with: email)
+    }
+    
+    // MARK: - UI Helpers
+    func clearError() {
+        errorMessage = ""
+        showingAlert = false
+    }
+    
+    func clearSuccess() {
+        successMessage = ""
+        showingAlert = false
     }
     
     func clearInputs() {
         email = ""
-        username = ""
         password = ""
         confirmPassword = ""
+        errorMessage = ""
+        successMessage = ""
     }
     
+    // MARK: - Toggle Register/Login
+    func toggleToRegister() {
+        isRegistering = true
+        clearError()
+    }
     
+    func toggleToLogin() {
+        isRegistering = false
+        clearError()
+    }
+    
+    // MARK: - Unified Auth Action
     func performAuth() {
         Task {
-            await MainActor.run {
-                isLoggingIn = true
-            }
-            
-            // Simulate network delay
-            try? await Task.sleep(nanoseconds: 1_500_000_000)
-            
-            await MainActor.run {
-                if isRegistering {
-                    registerEmailPassword(
-                        email: email,
-                        userName: username,
-                        password: password,
-                        confirmPassword: confirmPassword
-                    )
-                } else {
-                    loginUserNamePassword(
-                        userName: username,
-                        password: password
-                    )
-                }
-                isLoggingIn = false
-                
+            if isRegistering {
+                _ = await register()
+            } else {
+                _ = await login()
             }
         }
     }

@@ -11,6 +11,8 @@ struct OnboardingView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
     
+    @Binding var isUserLoggedIn: Bool
+    
     @State private var animateConstruction = false
     @State private var animateTools = false
     @State private var showWelcome = false
@@ -27,7 +29,7 @@ struct OnboardingView: View {
                             // Header Section
                             HeaderSection(showWelcome: $showWelcome)
                                 .padding(.top, 55)
-            
+                            
                             Spacer()
                             
                             // Construction Section
@@ -44,14 +46,11 @@ struct OnboardingView: View {
                                 .opacity(showWelcome ? 1 : 0)
                                 .offset(y: showWelcome ? 0 : 20)
                                 .animation(.spring(response: 1.0, dampingFraction: 0.8).delay(1.0), value: showWelcome)
-                            
-                            
+
                             // Animated Tools
                             AnimatedTool(animateTools: $animateTools, showWelcome: $showWelcome)
                                 .padding(.top, 10)
-                            
-                            
-                            
+
                             // Coming Soon Features
                             GridCells(showWelcome: $showWelcome)
                                 .padding(.horizontal, 30)
@@ -79,13 +78,10 @@ struct OnboardingView: View {
                 animateConstruction = true
                 animateTools = true
             }
+            .onReceive(NotificationCenter.default.publisher(for: .userDidLogout)) { _ in
+                isUserLoggedIn = false
+            }
             .edgesIgnoringSafeArea(.all)
         }
     }
-}
-
-
-#Preview {
-    OnboardingView()
-        .environmentObject(AuthViewModel())
 }
