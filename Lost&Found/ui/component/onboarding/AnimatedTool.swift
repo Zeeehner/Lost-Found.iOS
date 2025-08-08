@@ -34,7 +34,3 @@ struct AnimatedTool: View {
         }
     }
 }
-
-#Preview {
-    AnimatedTool(animateTools: .constant(true), showWelcome: .constant(true))
-}

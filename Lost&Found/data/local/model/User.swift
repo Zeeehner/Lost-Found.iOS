@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct User: Codable {
-    var id: UUID
-    var username: String
-    var email: String
-    var password: String
-    var registeredOn: String
+struct User: Codable, Identifiable {
+    let id: UUID
+    let email: String
+    let registeredOn: Date
     
-    init(id: UUID, username: String, email: String, password: String, registeredOn: String = Date.now.ISO8601Format()) {
+    init(
+        id: UUID,
+        email: String,
+        registeredOn: Date = Date()
+    ) {
         self.id = id
-        self.username = username
         self.email = email
-        self.password = password
         self.registeredOn = registeredOn
     }
 }

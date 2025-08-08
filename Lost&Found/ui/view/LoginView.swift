@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 struct LoginView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
     
+    @State private var cancellable: AnyCancellable?
     @State private var animateFields: Bool = false
     @State private var isBreathing: Bool = false
     @State private var showLogo: Bool = false
@@ -37,8 +39,6 @@ struct LoginView: View {
                             .offset(y: showLogo ? 0 : 40)
                             .animation(.spring(response: 1.2, dampingFraction: 0.7).delay(0.2), value: showLogo)
                             .padding(.horizontal, 20)
-                            
-                            
                         }
                         .padding(.top, geometry.safeAreaInsets.top + 20)
                         
@@ -71,27 +71,37 @@ struct LoginView: View {
                 }
             }
             .onAppear {
-                authViewModel.isBreathing = true
-                showLogo = true
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    animateFields = true
-                }
-            }
-            .onDisappear {
-                authViewModel.isBreathing = false
-            }
-            .navigationDestination(isPresented: .constant(authViewModel.isLoggedIn)) {
-                OnboardingView()
-                    .environmentObject(authViewModel)
+                startAnimations()
+                authViewModel.checkLoginStatus()
+                cancellable = NotificationCenter.default
+                    .publisher(for: .userDidLogin)
+                    .sink { _ in
+                        authViewModel.checkLoginStatus()
+                    }} .onDisappear {
+                        isBreathing = false
+                        cancellable?.cancel()
+                    }
+                    .onChange(of: authViewModel.successMessage) { _, newValue in
+                        // Wenn Login/Register erfolgreich war, prüfe Login-Status
+                        if !newValue.isEmpty && (newValue.contains("eingeloggt") || newValue.contains("erfolgreich")) {
+                            authViewModel.checkLoginStatus()
+                        }
+                    }
+                    .navigationDestination(isPresented: $authViewModel.isUserLoggedIn) {
+                        OnboardingView(isUserLoggedIn: $authViewModel.isUserLoggedIn)
+                            .environmentObject(authViewModel)
+                    }
+        }}
+    
+    // MARK: - Helper Methods
+    private func startAnimations() {
+        isBreathing = true
+        showLogo = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            withAnimation(.spring(response: 0.8, dampingFraction: 0.8)) {
+                animateFields = true
             }
         }
     }
-}
-
-
-#Preview {
-    LoginView()
-        .environmentObject(AuthViewModel())
-    
 }

@@ -16,8 +16,8 @@ struct LoginSection: View {
     var body: some View {
         VStack {
             CustomTextField(
-                text: $authViewModel.username,
-                contentDescription: "Username",
+                text: $authViewModel.email,
+                contentDescription: "E-Mail",
                 icon: "person.fill",
                 isSecure: false
             )
@@ -40,8 +40,4 @@ struct LoginSection: View {
             }
         }
     }
-}
-
-#Preview {
-    LoginSection(animateFields: .constant(true))
 }

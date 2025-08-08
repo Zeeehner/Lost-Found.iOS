@@ -51,16 +51,8 @@ struct CustomTextField: View {
                 .fill(Color(.systemGray6))
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(text.isEmpty ? .clear : .green.opacity(0.3), lineWidth: 2)
-                )
-        )
+                        .stroke(text.isEmpty ? .clear : .green.opacity(0.3), lineWidth: 2)))
         .autocapitalization(.none)
         .disableAutocorrection(true)
     }
-}
-
-
-#Preview {
-    @Previewable @State var text: String = "Zeeehner"
-    CustomTextField(text: $text, contentDescription: "Zeeehner", icon: "Zeeehner", isSecure: true)
 }

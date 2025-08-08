@@ -13,6 +13,7 @@ struct BreathingLogo: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     
     @StateObject private var compassVM = CompassViewModel()
+    
     @Binding var isBreathing: Bool
     @Binding var showLogo: Bool
     
@@ -59,16 +60,16 @@ struct BreathingLogo: View {
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing))
                         .frame(width: 220, height: 220)
-                        .scaleEffect(authViewModel.isBreathing ? 1.1 : 0.95)
-                        .animation(.easeInOut(duration: 2).repeatForever(autoreverses: true), value: authViewModel.isBreathing)
+                        .scaleEffect(isBreathing ? 1.1 : 0.95)
+                        .animation(.easeInOut(duration: 2).repeatForever(autoreverses: true), value: isBreathing)
                     
                     // Inner circle mit Kompass-Richtungen (N, S, O, W)
                     ZStack {
                         Circle()
                             .fill(Color.white.opacity(0.8))
                             .frame(width: 180, height: 180)
-                            .scaleEffect(authViewModel.isBreathing ? 1.0 : 0.9)
-                            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: authViewModel.isBreathing)
+                            .scaleEffect(isBreathing ? 1.0 : 0.9)
+                            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isBreathing)
                         
                         // Kompass-Markierungen
                         Group {
@@ -101,8 +102,8 @@ struct BreathingLogo: View {
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing))
                         .rotationEffect(.degrees(-compassVM.heading))
-                        .scaleEffect(authViewModel.isBreathing ? 1.1 : 0.95)
-                        .animation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true), value: authViewModel.isBreathing)
+                        .scaleEffect(isBreathing ? 1.1 : 0.95)
+                        .animation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true), value: isBreathing)
                 }
                 .opacity(showLogo ? 1 : 0)
                 .scaleEffect(showLogo ? 1 : 0.3)
