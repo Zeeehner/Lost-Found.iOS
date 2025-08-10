@@ -1,2 +1,22 @@
-secret.xcconfig
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+
+# Swift Package Manager
 SourcePackages/
+
+# xcconfig mit Secrets (falls vorhanden)
+secret.xcconfig
+
+# Swift Build Artifacts
+*.o
+*.swiftdeps
+*.swiftdoc
+*.swiftsourceinfo
+*.d
+*.dia
+
+# Logs und temporäre Dateien
+*.log
+*.tmp
