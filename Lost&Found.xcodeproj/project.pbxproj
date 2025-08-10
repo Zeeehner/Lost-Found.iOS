@@ -7,18 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		783728C42E48E2EF00C418B3 /* secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 783728C32E48E2EF00C418B3 /* secret.xcconfig */; };
 		785999FC2E4568D600BD5740 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 785999FB2E4568D600BD5740 /* Auth */; };
 		785999FE2E4568D600BD5740 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 785999FD2E4568D600BD5740 /* Functions */; };
 		78599A002E4568D600BD5740 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 785999FF2E4568D600BD5740 /* PostgREST */; };
 		78599A022E4568D600BD5740 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 78599A012E4568D600BD5740 /* Realtime */; };
 		78599A042E4568D600BD5740 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 78599A032E4568D600BD5740 /* Storage */; };
-		785F70892E45B2DF00F145BC /* secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 785F70882E45B2DF00F145BC /* secret.xcconfig */; };
 		787555DC2E456FC6006A61B3 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 787555DB2E456FC6006A61B3 /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		782605582E2B9F5100333A95 /* Lost&Found.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lost&Found.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		785F70882E45B2DF00F145BC /* secret.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secret.xcconfig; sourceTree = "<group>"; };
+		783728C12E48E27F00C418B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		783728C32E48E2EF00C418B3 /* secret.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secret.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -49,7 +50,8 @@
 		7826054F2E2B9F5100333A95 = {
 			isa = PBXGroup;
 			children = (
-				785F70882E45B2DF00F145BC /* secret.xcconfig */,
+				783728C32E48E2EF00C418B3 /* secret.xcconfig */,
+				783728C12E48E27F00C418B3 /* Info.plist */,
 				7826055A2E2B9F5100333A95 /* Lost&Found */,
 				787555DA2E456FC6006A61B3 /* Frameworks */,
 				782605592E2B9F5100333A95 /* Products */,
@@ -144,7 +146,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				785F70892E45B2DF00F145BC /* secret.xcconfig in Resources */,
+				783728C42E48E2EF00C418B3 /* secret.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +165,7 @@
 /* Begin XCBuildConfiguration section */
 		782605632E2B9F5300333A95 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 785F70882E45B2DF00F145BC /* secret.xcconfig */;
+			baseConfigurationReference = 783728C32E48E2EF00C418B3 /* secret.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -215,6 +217,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
+				"INFOPLIST_FILE[sdk=*]" = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -228,7 +233,7 @@
 		};
 		782605642E2B9F5300333A95 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 785F70882E45B2DF00F145BC /* secret.xcconfig */;
+			baseConfigurationReference = 783728C32E48E2EF00C418B3 /* secret.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -274,6 +279,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
+				"INFOPLIST_FILE[sdk=*]" = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -286,7 +294,7 @@
 		};
 		782605662E2B9F5300333A95 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 785F70882E45B2DF00F145BC /* secret.xcconfig */;
+			baseConfigurationReference = 783728C32E48E2EF00C418B3 /* secret.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -320,7 +328,7 @@
 		};
 		782605672E2B9F5300333A95 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 785F70882E45B2DF00F145BC /* secret.xcconfig */;
+			baseConfigurationReference = 783728C32E48E2EF00C418B3 /* secret.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -5,7 +5,7 @@
 //  Created by Noah on 08.08.25.
 //
 
-import Foundation
+import SwiftUI
 import Supabase
 
 @MainActor
