@@ -2,21 +2,60 @@
 build/
 DerivedData/
 *.xcuserstate
+*.xcworkspace
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xccheckout
 
 # Swift Package Manager
 SourcePackages/
+.swiftpm/
 
-# xcconfig mit Secrets (falls vorhanden)
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output/
+
+# Secrets (Config Files)
 secret.xcconfig
 
-# Swift Build Artifacts
+# Compiled Object files and indexes
 *.o
+*.obj
+*.d
+*.dia
 *.swiftdeps
 *.swiftdoc
 *.swiftsourceinfo
-*.d
-*.dia
 
-# Logs und temporäre Dateien
+# Logs and temporary files
 *.log
 *.tmp
+*.swp
+*~
+
+# macOS system files
+.DS_Store
+
+# Backup files
+*.backup
+*.orig
+*.rej
+*.swp
+
+# Xcode scheme management files
+xcuserdata/
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager generated files
+.build/
+
